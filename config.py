@@ -1,4 +1,8 @@
-import urllib2
+try:
+    import urllib.request as urllib_request #for python 3
+except ImportError:
+    import urllib2 as urllib_request # for python 2
+
 import os
 import os.path
 import json
@@ -55,7 +59,7 @@ class Config:
     def update_config(self):
         print("Updating config...")
         try:
-            f = urllib2.urlopen(Config.CONFIG_URL)
+            f = urllib_request.urlopen(Config.CONFIG_URL)
             content = f.read()
             with open(Config.CONFIG_FILE, 'w') as f:
                 f.write(content)
