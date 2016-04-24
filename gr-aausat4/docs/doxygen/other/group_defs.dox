@@ -1,0 +1,7 @@
+/*!
+ * \defgroup block GNU Radio AAUSAT4 C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the AAUSAT4 GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */
+
