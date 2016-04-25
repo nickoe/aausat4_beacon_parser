@@ -54,4 +54,4 @@ class Parser():
         
         if payload:
             beacon_decode = beacon.Beacon(payload)
-            return beacon_decode
+            return str(beacon_decode)
