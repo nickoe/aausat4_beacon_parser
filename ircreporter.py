@@ -7,7 +7,7 @@ class IRCReporter:
     USER_HOST = "bluebox"
     USER_SERVER = "bluebox"
     USER_REALNAME = "bluebox parser"
-    RECEIVER_NICK = "aaumcc"
+    RECEIVER_NICK = "#aausat4packets"
     IRC_SERVER = "irc.freenode.org"
     IRC_PORT = 6667
     IRC_CHANNEL = "#aausat4packets"
@@ -35,7 +35,7 @@ class IRCReporter:
     def send(self, msg):
         lines = msg.replace("\r","").split("\n")
         for line in lines:
-            self.irc.send('PRIVMSG {} : {}\r\n'.format(IRCReporter.RECEIVER_NICK, line))
+            self.irc.send('PRIVMSG {} :{}\r\n'.format(IRCReporter.RECEIVER_NICK, line))
         
 
     

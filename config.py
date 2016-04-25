@@ -12,37 +12,40 @@ import time
 
 class Config:
 
-    DEFAULT_CONFIG_FILE = 'default_config.json'
-    CONFIG_FILE = 'config.json'
     CONFIG_URL = 'https://raw.githubusercontent.com/aausat/aausat4_beacon_parser/master/default_config.json'
     UPDATE_FREQUENCY_MINUTES = 30
 
-    def __init__(self):
+    def __init__(self, config_file=None):
         self.config_lock = threading.Lock()
         self.config = None
-        self.load_config()
-        self.update_config()
+        self.observers = []
 
+        if config_file:
+            with open(config_file, 'r') as conf_file:
+                conf = json.loads(conf_file.read())
+                self.confif = self.set_config(conf, False)
+        else:
+            self.__auto_update_config__()
+            
+    def add_observer(self, observer):
+        self.observers.append(observer)
+
+    def delete_observer(self, observer):
+        if observer in self.observers:
+            self.observers.remove(obersver)
+
+    def notify_observers(self, config=None):
+        for observer in self.observers:
+            observer.update(config)
+            
     def get_config(self):
         with self.config_lock:
             return self.config.copy()
 
-    def load_config(self, only_if_new=False):
-        # Load config file
-        config_file = Config.CONFIG_FILE
-        if not os.path.isfile(config_file):
-            config_file = Config.DEFAULT_CONFIG_FILE
-            if not os.path.isfile(config_file):
-                # No config files
-                return
-        with open(config_file, 'r') as f:
-            new_config = json.load(f)
-            self.set_config(new_config, only_if_new)
-
     def set_config(self, config_dict, only_if_new):
         if not self.verify_config(config_dict):
-            # Not valid
-            return
+            raise Exception("Invalid config")
+
         with self.config_lock:
             update = True
             if only_if_new and self.config != None:
@@ -52,23 +55,22 @@ class Config:
                     print("Config updated (version {}).".format(config_dict['version']))
             if update:
                 self.config = config_dict
+                self.notify_observers(self.config)
             else:
                 print("No need to update.")
-            
 
-    def update_config(self):
+    def __auto_update_config__(self):
         print("Updating config...")
         try:
             f = urllib_request.urlopen(Config.CONFIG_URL)
             content = f.read()
-            with open(Config.CONFIG_FILE, 'w') as f:
-                f.write(content)
             config = json.loads(content)
             self.set_config(config, True)
         except Exception as e:
             print("Error: {}".format(e))
         # Start update config timer
-        t = threading.Timer(60*Config.UPDATE_FREQUENCY_MINUTES, self.update_config, ())
+        print("Config is up to date")
+        t = threading.Timer(60*Config.UPDATE_FREQUENCY_MINUTES, self.__auto_update_config__, ())
         t.daemon=True
         t.start()
         
@@ -80,3 +82,14 @@ class Config:
                        ('bitrate', 'power', 'training', 'frequency', 'modindex'))
         return False
     
+if __name__ == '__main__':
+    class TestConfig:
+        def __init__(self):
+            c = Config()
+            c.get_config()
+            c.add_observer(self)
+            
+        def update(self, config):
+            print config
+    
+    tc = TestConfig()

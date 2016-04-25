@@ -40,7 +40,7 @@ class Parser():
         else:
             # Parsing with verification
             hexdata = binascii.b2a_hex(data)
-            print hexdata
+
             header = struct.unpack("<I", data[0:4])[0]
             # Parse CSP header
             src = ((header >> 25) & 0x1f)
@@ -55,3 +55,23 @@ class Parser():
         if payload:
             beacon_decode = beacon.Beacon(payload)
             return str(beacon_decode)
+
+if __name__ == '__main__':
+    import binascii
+    args_parser = argparse.ArgumentParser(description='AAUSAT4 Beacon Parser')
+    args_parser.add_argument('--file', dest='file_name', required=False, type=str, default=None,
+                             help='Parse beacon from a binary file')
+    args_parser.add_argument('--data', dest='data', required=False, type=str, default=None,
+                             help='Parse the data specified')
+
+    args = args_parser.parse_args()
+
+    parser = Parser()
+
+    if args.file_name:
+        raise Exception("Not implemented")
+    if args.data:
+        bin_data = binascii.a2b_hex(args.data)
+        beacon = parser.parse_data(bin_data)
+        if beacon:
+            print beacon
