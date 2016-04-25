@@ -120,8 +120,11 @@ class beacon_parser(gr.sync_block):
             print "hexdata=",hexdata[4:-1]
 
             psr = parser.Parser()
-            a = psr.parse_data(binascii.a2b_hex(hexdata[4:-1]))
-            print a
+            try:
+                a = psr.parse_data(binascii.a2b_hex(hexdata[4:-1]))
+                print a
+            except:
+                print "Decoding error"
             # reset to empty
             self.stream.clear()
             self.packet = 0
