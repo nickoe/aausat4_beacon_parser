@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<block>
+  <name>tracker_doppler_shift</name>
+  <key>aausat4_tracker_doppler_shift</key>
+  <category>aausat4</category>
+  <import>import aausat4</import>
+  <make>aausat4.tracker_doppler_shift($tle_title, $tle_1, $tle_2, $comm_freq_tx, $comm_freq_rx, $gs_lon, $gs_lat, $gs_alt, $obs_start, $obs_end, $time_resolution_us)</make>
+
+  <param>
+    <name>TLE Title</name>
+    <key>tle_title</key>
+    <type>string</type>
+  </param>
+  
+  <param>
+    <name>TLE 1</name>
+    <key>tle_1</key>
+    <type>string</type>
+  </param>
+	
+  <param>
+    <name>TLE 2</name>
+    <key>tle_2</key>
+    <type>string</type>
+  </param>
+  
+
+  <param>
+    <name>Longtitude (Degrees)</name>
+    <key>gs_lon</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>Latitude (Degrees)</name>
+    <key>gs_lat</key>
+    <type>float</type>
+  </param>
+
+  <param>
+    <name>Altitude (m)</name>
+    <key>gs_alt</key>
+    <type>float</type>
+  </param>
+
+  <param>
+  	<name>Frequency TX (Hz)</name>
+  	<key>comm_freq_tx</key>
+  	<type>float</type>
+  </param>
+
+  <param>
+  	<name>Frequency RX (Hz)</name>
+  	<key>comm_freq_rx</key>
+  	<type>float</type>
+  </param>
+  
+  <param>
+    <name>Observation Start Time (ISO-8601 UTC)</name>
+    <key>obs_start</key>
+    <type>string</type>
+  </param>
+  
+   <param>
+    <name>Observation End Time (ISO-8601 UTC)</name>
+    <key>obs_end</key>
+    <type>string</type>
+  </param>
+  
+  <param>
+    <name>Time resolution (us)</name>
+    <key>time_resolution_us</key>
+    <type>float</type>
+  </param>	
+
+  <source>
+    <name>doppler_out</name>
+    <type>message</type>
+  </source>
+</block>
