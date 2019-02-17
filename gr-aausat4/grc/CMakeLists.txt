@@ -18,5 +18,6 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    aausat4_beacon_parser.xml DESTINATION share/gnuradio/grc/blocks
+    aausat4_beacon_parser.xml
+    aausat4_tracker_doppler_shift.xml DESTINATION share/gnuradio/grc/blocks
 )

@@ -32,4 +32,5 @@ except ImportError:
 
 # import any pure python here
 from beacon_parser import beacon_parser
+from tracker_doppler_shift import tracker_doppler_shift
 #
